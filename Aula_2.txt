@@ -1,0 +1,36 @@
+Endereçamento
+
+IP (Internet Protocol):
+|_32 bits
+    |_ 8 bytes
+    |_ 4 grupos
+    |
+    |_ Separados por .
+    |_ Representados em decimal
+       |_ 0 -225
+    |_ Identifica a interface (placa de rede)
+    |_ ifconfig (Linux) ou ipconfig (Windows)
+        |_ Mostra o IP da maquina
+
+IPv6:
+|_ 2¹²⁸ = 340 undecilões
+
+Portas:
+|_ Identificação do processo
+|_ Nível da aplicação
+|_ 16 bits
+    |_ 0 - 65535
+
+Endereço MAC (Media Access Control):
+|_ Identificação física
+    |_ Endereço gravado na placa de rede
+
+
+Lo (Loopback):
+|_ 127.0.0.1
+    |_ Endereço virtual
+    |_ Para os programas da própria maquina se conversam
+
+
+Ping:
+|_ mtr -n 8.8.8.8
