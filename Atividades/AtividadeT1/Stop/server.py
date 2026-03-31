@@ -30,7 +30,9 @@ def rodar_stop(conn, addr, tid):
         resposta = conn.recv(1024).decode("")
         NOME[tid] = resposta
 
-        NOME[tid]
+        NOME[tid] = resposta
+
+        pass
 
 def iniciar_servidor():
     global LETRA
