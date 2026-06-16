@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quadro de Recados</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f0f4f8;
+      color: #2d3748;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 { font-size: 2rem; color: #2b6cb0; }
+    header p  { color: #718096; margin-top: 0.25rem; }
+
+    .container { max-width: 640px; margin: 0 auto; }
+
+    .card {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 1.5rem;
+    }
+
+    .card h2 { font-size: 1.1rem; margin-bottom: 1rem; color: #4a5568; }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid #cbd5e0;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      font-family: inherit;
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    button {
+      background: #2b6cb0;
+      color: white;
+      border: none;
+      padding: 0.65rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    button:hover { background: #2c5282; }
+
+    .message {
+      border-left: 4px solid #bee3f8;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+      background: #ebf8ff;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    .message .meta {
+      font-size: 0.8rem;
+      color: #718096;
+      margin-bottom: 0.25rem;
+    }
+
+    .message .name     { font-weight: 600; color: #2b6cb0; }
+    .message .ips      { font-size: 0.75rem; color: #a0aec0; font-family: monospace; margin-top: 0.2rem; }
+    .message .ip-label { color: #cbd5e0; }
+    .message .text     { color: #2d3748; margin-top: 0.35rem; }
+
+    .empty { color: #a0aec0; text-align: center; padding: 1rem 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Quadro de Recados</h1>
+      <p>Deixe uma mensagem para todos verem</p>
+    </header>
+
+    <div class="card">
+      <h2>Novo recado</h2>
+      <form action="/post" method="post">
+        <input type="text" name="name" placeholder="Seu nome" required maxlength="100">
+        <textarea name="text" placeholder="Escreva seu recado..." required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Recados ({{ messages | length }})</h2>
+      {% if messages %}
+        {% for m in messages %}
+        <div class="message">
+          <div class="meta">
+            <span class="name">{{ m.name }}</span>
+            &mdash; {{ m.created_at[:19].replace('T', ' ') }}
+          </div>
+          {% if m.ip_client or m.ip_origin %}
+          <div class="ips">
+            {% if m.ip_client %}<span class="ip-label">cliente:</span> {{ m.ip_client }}{% endif %}
+            {% if m.ip_client and m.ip_origin %} &bull; {% endif %}
+            {% if m.ip_origin %}<span class="ip-label">origem:</span> {{ m.ip_origin }}{% endif %}
+          </div>
+          {% endif %}
+          <div class="text">{{ m.text }}</div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="empty">Nenhum recado ainda. Seja o primeiro!</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
